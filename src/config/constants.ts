@@ -1,5 +1,6 @@
 export const CONFIG = {
   PORT: 'PORT',
+  JWT_SECRET: 'JWT_SECRET',
   DB: {
     TYPE: 'DB_TYPE',
     HOST: 'DB_HOST',
