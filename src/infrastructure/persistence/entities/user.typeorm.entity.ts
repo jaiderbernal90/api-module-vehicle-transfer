@@ -12,6 +12,7 @@ import {
 import { RoleTypeOrmEntity } from './role.typeorm.entity';
 import { ProjectTypeOrmEntity } from './project.typeorm.entity';
 import { TransferTypeOrmEntity } from './transfer.typeorm.entity';
+import { OrganizationalUnitTypeOrmEntity } from './organizational-unit.typeorm.entity';
 
 @Entity('users')
 export class UserTypeOrmEntity {
@@ -60,6 +61,20 @@ export class UserTypeOrmEntity {
 
   @OneToMany(() => TransferTypeOrmEntity, (transfer) => transfer.transmitter)
   transmitterTransfers: TransferTypeOrmEntity[];
+
+  @ManyToMany(() => OrganizationalUnitTypeOrmEntity, (unit) => unit.users)
+  @JoinTable({
+    name: 'users_organizational_units',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'organizational_unit_id',
+      referencedColumnName: 'id',
+    },
+  })
+  organizational_units: OrganizationalUnitTypeOrmEntity[];
 
   @CreateDateColumn()
   created_at!: Date;

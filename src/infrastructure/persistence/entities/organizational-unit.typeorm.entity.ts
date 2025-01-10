@@ -8,9 +8,12 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { ProjectTypeOrmEntity } from './project.typeorm.entity';
 import { TransferTypeOrmEntity } from './transfer.typeorm.entity';
+import { UserTypeOrmEntity } from './user.typeorm.entity';
 
 @Entity('organizational_units')
 export class OrganizationalUnitTypeOrmEntity {
@@ -44,4 +47,18 @@ export class OrganizationalUnitTypeOrmEntity {
     (transfer) => transfer.organizational_unit,
   )
   transfers: TransferTypeOrmEntity[];
+
+  @ManyToMany(() => UserTypeOrmEntity, (user) => user.organizational_units)
+  @JoinTable({
+    name: 'users_organizational_units',
+    joinColumn: {
+      name: 'organizational_unit_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+  })
+  users: UserTypeOrmEntity[];
 }

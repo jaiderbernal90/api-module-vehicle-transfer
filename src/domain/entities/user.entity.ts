@@ -1,3 +1,4 @@
+import { OrganizationalUnit } from './organizational-unit.entity';
 import { Project } from './project.entity';
 import { Role } from './role.entity';
 import { Transfer } from './transfer.entity';
@@ -9,8 +10,9 @@ export class User {
   password_hash: string;
   roles?: Role[];
   projects?: Project[];
-  clientTransfers?: Transfer[];
-  transmitterTransfers?: Transfer[];
+  client_transfers?: Transfer[];
+  transmitter_transfers?: Transfer[];
+  organizational_units?: OrganizationalUnit[];
   created_at!: Date;
   updated_at!: Date;
   deleted_at?: Date;
