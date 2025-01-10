@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from '@/config/typeorm.config';
@@ -29,6 +29,9 @@ import { UserRepository } from './infrastructure/persistence/repositories/user.r
 import { GetAllTransfersUseCase } from './application/use-cases/transfer/get-all-transfers.use-case';
 import { ValidationService } from './application/services/validation.service';
 import { VALIDATION_SERVICE_TOKEN } from './domain/ports/services/validation.service.port';
+import { APP_GUARD } from '@nestjs/core';
+import { CustomThrottlerGuard } from './core/guards/throttle.guard';
+import { SecurityLoggingMiddleware } from './infrastructure/middleware/security-logging.middleware';
 
 @Module({
   imports: [
@@ -91,6 +94,14 @@ import { VALIDATION_SERVICE_TOKEN } from './domain/ports/services/validation.ser
       provide: TRANSFER_REPOSITORY_TOKEN,
       useClass: TransferRepository,
     },
+    {
+      provide: APP_GUARD,
+      useClass: CustomThrottlerGuard,
+    },
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(SecurityLoggingMiddleware).forRoutes('*');
+  }
+}

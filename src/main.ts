@@ -5,6 +5,8 @@ import { json } from 'express';
 import helmet from 'helmet';
 import { CONFIG } from './config/constants';
 import { ConfigService } from '@nestjs/config';
+import * as compression from 'compression';
+import { SecurityHeadersInterceptor } from './core/interceptors/security-headers.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,15 +15,26 @@ async function bootstrap() {
 
   app.use(json({ limit: '60mb' }));
   app.use(helmet());
-  app.enableCors();
+  app.enableCors({
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    maxAge: 3600,
+  });
+
+  app.use(compression());
 
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
     }),
   );
+  app.useGlobalInterceptors(new SecurityHeadersInterceptor());
+
   app.setGlobalPrefix('api/v1');
 
   const PORT = configService.get<string>(CONFIG.PORT);
