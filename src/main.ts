@@ -7,6 +7,7 @@ import { CONFIG } from './config/constants';
 import { ConfigService } from '@nestjs/config';
 import * as compression from 'compression';
 import { SecurityHeadersInterceptor } from './core/interceptors/security-headers.interceptor';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -36,6 +37,18 @@ async function bootstrap() {
   app.useGlobalInterceptors(new SecurityHeadersInterceptor());
 
   app.setGlobalPrefix('api/v1');
+
+  const config = new DocumentBuilder()
+    .setTitle('Transfer API')
+    .setDescription('API para gestión de transferencias vehiculares')
+    .setVersion('1.0')
+    .addTag('auth', 'Autenticación')
+    .addTag('transfers', 'Gestión de transferencias')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, document);
 
   const PORT = configService.get<string>(CONFIG.PORT);
 

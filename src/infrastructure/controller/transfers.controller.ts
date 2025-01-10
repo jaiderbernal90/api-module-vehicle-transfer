@@ -24,10 +24,13 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('transfers')
 @Controller('transfers')
 @UseGuards(JwtAuthGuard, PermissionsGuard)
 @UseFilters(TransferExceptionFilter)
+@ApiBearerAuth()
 export class TransferController {
   constructor(
     @Inject(TRANSFER_SERVICE_TOKEN)
