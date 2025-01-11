@@ -17,25 +17,6 @@ API REST desarrollada con NestJS implementando arquitectura hexagonal (puertos y
 - Helmet
 - Rate Limiting
 
-## Arquitectura Hexagonal
-El proyecto sigue los principios de la arquitectura hexagonal (ports & adapters):
-
-```
-src/
-├── domain/
-│   ├── entities/
-│   ├── ports/
-│   └── services/
-├── infrastructure/
-│   ├── adapters/
-│   ├── config/
-│   └── persistence/
-└── application/
-    ├── controllers/
-    ├── dtos/
-    └── use-cases/
-```
-
 ### Capas
 - **Domain**: Contiene la lógica de negocio, entidades y puertos
 - **Infrastructure**: Implementa los adaptadores y configuración
