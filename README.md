@@ -1,73 +1,96 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Vehicle Transfer API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Descripción
+API REST desarrollada con NestJS implementando arquitectura hexagonal (puertos y adaptadores) para gestionar transferencias de vehículos.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## URLs
+- **API**: [https://api-module-vehicle-transfer.onrender.com/](https://api-module-vehicle-transfer.onrender.com/)
+- **Swagger Documentation**: [https://api-module-vehicle-transfer.onrender.com/api/docs](https://api-module-vehicle-transfer.onrender.com/api/docs)
 
-## Description
+## Tecnologías Utilizadas
+- NestJS
+- TypeORM
+- PostgreSQL
+- Redis
+- JWT
+- Swagger
+- Helmet
+- Rate Limiting
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Arquitectura Hexagonal
+El proyecto sigue los principios de la arquitectura hexagonal (ports & adapters):
 
-## Installation
-
-```bash
-$ pnpm install
+```
+src/
+├── domain/
+│   ├── entities/
+│   ├── ports/
+│   └── services/
+├── infrastructure/
+│   ├── adapters/
+│   ├── config/
+│   └── persistence/
+└── application/
+    ├── controllers/
+    ├── dtos/
+    └── use-cases/
 ```
 
-## Running the app
+### Capas
+- **Domain**: Contiene la lógica de negocio, entidades y puertos
+- **Infrastructure**: Implementa los adaptadores y configuración
+- **Application**: Maneja los casos de uso y controladores
 
-```bash
-# development
-$ pnpm run start
+## Configuración Local del Proyecto
 
-# watch mode
-$ pnpm run start:dev
+### Prerequisitos
+- Node.js (v18 o superior)
+- PostgreSQL
+- Redis
 
-# production mode
-$ pnpm run start:prod
+### Variables de Entorno
+1. Crear un archivo `.env` en la raíz del proyecto:
+
+```env
+PORT=8000
+DB_TYPE=postgres
+DB_HOST=your_host
+DB_PORT=5432
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+DB_NAME=vehicle_transfer
+NODE_ENV=development
+JWT_SECRET=your_secret_key
 ```
 
-## Test
+### Configuración de Base de Datos
+1. Crear la base de dato vehicle_transfer.
+2. Importar o ejecutar el query con los datos en el archivo vehicle_transfer.sql`.
 
+
+### Instalación y Ejecución
 ```bash
-# unit tests
-$ pnpm run test
+# Clonar el repositorio
+git clone <repository-url>
 
-# e2e tests
-$ pnpm run test:e2e
+# Instalar dependencias
+npm install
 
-# test coverage
-$ pnpm run test:cov
+# Iniciar en desarrollo
+npm run start:dev
+
+# Iniciar en producción
+npm run build
+npm run start:prod
 ```
 
-## Support
+## Documentación API
+La documentación de la API está disponible a través de Swagger UI en `/api/docs`.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Endpoints Principales
+- `POST /auth/login`: Login de usuarios
+- `POST /transfers`: Crear transferencia
+- `GET /transfers`: Obtener transferencias
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+## Licencia
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
