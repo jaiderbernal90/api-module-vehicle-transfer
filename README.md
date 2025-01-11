@@ -11,7 +11,6 @@ API REST desarrollada con NestJS implementando arquitectura hexagonal (puertos y
 - NestJS
 - TypeORM
 - PostgreSQL
-- Redis
 - JWT
 - Swagger
 - Helmet
