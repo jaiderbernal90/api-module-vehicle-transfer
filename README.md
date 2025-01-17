@@ -19,7 +19,7 @@ API REST desarrollada con NestJS implementando arquitectura hexagonal (puertos y
 ### Capas
 - **Domain**: Contiene la lógica de negocio, entidades y puertos
 - **Infrastructure**: Implementa los adaptadores y configuración
-- **Application**: Maneja los casos de uso y controladores
+- **Application**: Maneja detalles tecnicos y las implementaciones externas
 
 ## Configuración Local del Proyecto
 
